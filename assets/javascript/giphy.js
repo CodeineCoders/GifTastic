@@ -5,11 +5,11 @@ $(document).ready(function () {
 
         $("#animalView").empty();
         for (var i = 0; i < animals.length; i++) {
-            var a = $('<button>')
-            a.addClass("animal");
-            a.attr("data-name", animals[i]);
-            a.text(animals[i]);
-            $("#animalView").append(a);
+            var button = $("<button>")
+            button.addClass("animal");
+            button.attr("data-name", animals[i]);
+            button.text(animals[i]);
+            $("#animalView").append(button);
 
         }
     }
@@ -24,33 +24,27 @@ $(document).ready(function () {
 
         function display() {
 
-            var animal = $(this).attr("data-name");
-            //using giphy URL & apikey
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animals + "&api_key=DfEDLoxtRsTuunAcM6Uinvl6dmatdLn6&limit=5";
+        var animal = $(this).attr("data-name");
+            //using giphy URL & apikey & rating is included.
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animals + "&api_key=DfEDLoxtRsTuunAcM6Uinvl6dmatdLn6&limit=5&rating=g";
             
             $.ajax({
                 url: queryURL,
                 method: "GET"
             }).then(function (response) {
-
                 var results = response.data;
                 for (var i =0; i < results.length; i++) {
                     var newDiv = $("<div class=gif>");
-                    var gif = $("<img>");
-                        gif.attr("src", results[i].images.fixed_height.url);
-                        gif.addClass("gif")
+                    var gifs = $("<img>");
+                        gifs.attr("src", results[i].images.fixed_height.url);
 
-                    newDiv.append(gif)
+                    newDiv.append(gifs)
                     $("#images").prepend(newDiv);
                 }
 
            });
 
         }
-
-        $(document).click(".gif", function() {
-
-        });
 
         $(document).click(".animal", display);
 
